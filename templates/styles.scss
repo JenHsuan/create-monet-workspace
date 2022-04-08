@@ -1,0 +1,24 @@
+/* You can add global styles to this file, and also import other style files */
+// Import general application styling css.
+@import '~@neutrino/theming/global-style.css';
+
+// Import scss style mixins such as `nu-fonts()`.
+@import '~@neutrino/theming/mixins';
+
+// Apply the "nu-fonts()" mixin globally.
+@include nu-fonts('~@neutrino/theming/fonts');
+
+// Import flag-icons
+@import '~flag-icons/sass/flag-icons.scss';
+
+@import "assets/scss/main.scss";
+
+// Remove the default 5px margin in the browser stylesheet.
+body {
+  margin: 0;
+}
+
+// Match overlay z-index with Neutrino's Angular CDK z-index
+.cdk-overlay-backdrop {
+  z-index: $cdk-z-index;
+}

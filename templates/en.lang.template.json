@@ -1,0 +1,37 @@
+{
+    "template": "lang",
+    "id": "en",
+    "version": "1.0",
+    "title": "Language Template",
+    "description": "Language template prototype",
+    "lang": {
+        "app": {
+            "title": "",
+            "firmware": "1.0",
+            "language": {
+              "en": "English",
+              "zh": "Chinese"
+            },
+            "monet": {
+                "data-table": {
+                    "list-table": {
+                        "header": {
+                            "action": "Actions"
+                        }
+                    }
+                },
+                "validation": {
+                    "validating": "Validating..."
+                }
+            },
+            "neutrino": {
+              "Ok": "OK",
+              "Cancel": "CANCEL"
+            }
+        },
+        "menus": {
+        },
+        "modules": {
+        }
+    }
+}

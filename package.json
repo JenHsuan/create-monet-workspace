@@ -1,0 +1,21 @@
+{
+  "name": "create-monet-workspace",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "bin": "index.js",
+  "keywords": [
+    "Angular",
+    "npx"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "fs-extra": "^10.0.1",
+    "inquirer": "^8.2.2",
+    "shelljs": "^0.8.5"
+  }
+}

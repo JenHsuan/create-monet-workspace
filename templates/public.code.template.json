@@ -1,0 +1,15 @@
+{
+    "template": "code",
+    
+    "id": "public",
+    "version": "1.0",
+    "title": "Code Template",
+    "description": "Code template",
+  
+    "code": {
+      "number-codes": {
+      },
+      "string-codes": {
+      }
+    }
+}
