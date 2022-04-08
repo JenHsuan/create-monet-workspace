@@ -1,6 +1,6 @@
 {
   "name": "create-monet-workspace",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "",
   "main": "index.js",
   "bin": "index.js",
@@ -9,10 +9,11 @@
     "npx"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
-  "author": "",
-  "license": "ISC",
+  "homepage": "https://github.com/JenHsuan/create-monet-workspace#readme",
+  "author": "jenhsuanhsieh",
+  "license": "MIT",
   "dependencies": {
     "fs-extra": "^10.0.1",
     "inquirer": "^8.2.2",

@@ -1,4 +1,4 @@
-#!/usr/bin/node
+#!/usr/bin/env node
 
 const shell = require("shelljs");
 const inquirer = require("inquirer");
@@ -125,4 +125,7 @@ inquirer.prompt(questions).then(answers => {
     //14. Update readme.md
     shell.echo('14. Update readme.md');
     shell.cp('-R',`${__dirname}/templates/readme.md`, `./`);
+
+    
+    shell.echo('New project has been created!');
 });
