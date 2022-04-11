@@ -29,9 +29,20 @@
               "Cancel": "CANCEL"
             }
         },
+        "btnbar": {
+            "create": "New",
+            "edit": "Edit",
+            "delete": "Delete"
+        },
+        "table-infos": {
+        },
         "menus": {
         },
         "modules": {
+        },
+        "number-codes": {
+        },
+        "string-codes": {
         }
     }
 }

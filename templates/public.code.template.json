@@ -8,6 +8,28 @@
   
     "code": {
       "number-codes": {
+        "public.yes-or-no": {
+          "mainCode": "public.yes-or-no",
+          "module": "public",
+          "label": "Yes or No",
+          "hasIcon": true,
+          "hasTip": false,
+          "valid": true,
+          "codes": [
+            {
+              "code": 1,
+              "label": "Yes",
+              "iconId": "valid",
+              "valid": true
+            },
+            {
+              "code": 0,
+              "label": "No",
+              "iconId": "invalid",
+              "valid": true
+            }
+          ]
+        }
       },
       "string-codes": {
       }

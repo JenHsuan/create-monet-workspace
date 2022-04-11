@@ -4,6 +4,7 @@ const shell = require("shelljs");
 const inquirer = require("inquirer");
 const process = require('process'); 
 const updatePackage = require('./utils');
+const configs = require('./configs');
 
 const questions = [
     {
@@ -26,7 +27,6 @@ if (!shell.which('ng')) {
     shell.exit(1);
 }
   
-
 inquirer.prompt(questions).then(answers => {
     const { projectName, monetPath } = answers;
 
@@ -36,10 +36,8 @@ inquirer.prompt(questions).then(answers => {
     }
 
     const workSpaceName = `${projectName}-workspace`;
-    const libsPath = `${monetPath}/libs`;
-    const scriptsPath = `${monetPath}/scripts`;
-    const monetSourcePath = `${monetPath}/projects/monet`;
-    const scssPath = `${monetPath}/projects/demo-neutrino/src/assets/scss`;
+    const externalFilePathMap = configs.externalFilePathMap(projectName, workSpaceName);
+    const targetPathMap = configs.targetPathMap(monetPath, __dirname);
     
     //1. Create the project folder
     shell.echo('1. Create the project folder');
@@ -55,77 +53,52 @@ inquirer.prompt(questions).then(answers => {
     shell.echo('3. Create the application');
     shell.exec(`ng generate application ${projectName} --routing --style scss`);
 
-    //4. Copy the Monet and Neutrino library
-    shell.echo('4. Copy the Monet and Neutrino library');
-    shell.cp('-R',`${libsPath}`,'.');
+    // 4. Create folders
+    shell.echo('4. Create folders');
+    shell.cd('../..');
+    configs.publicPaths(projectName, workSpaceName).map(path => {
+        shell.mkdir(path)
+    })
 
-    //5. Copy the scripts
-    shell.echo('5. Copy the scripts');
-    shell.cp('-R',`${scriptsPath}`,'.');
-    
-    //6. Copy the Monet source code
-    shell.echo('6. Copy the Monet source code');
-    shell.cd('projects');
-    shell.cp('-R',`${monetSourcePath}`,'.');
-    shell.cd('..');
-    
-    //7. Copy global SCSS
-    shell.echo('7. Copy global SCSS');
-    shell.cd('projects');
-    shell.cd(projectName);
-    shell.cd('src/assets');
-    shell.cp('-R',`${scssPath}`,'.');
-    shell.cd('../../../..');
+    //5. Copy the Monet and Neutrino library
+    shell.echo('5. Copy the Monet and Neutrino library');
+    shell.cp('-R', targetPathMap.monetLibsPath, externalFilePathMap.monetLibsPath);
 
-    //8. Update package.json
-    shell.echo('8. Update package.json');
-    updatePackage.updatePackageJson(`${projectName}`, monetPath)
-    
-    //9. Update tsconfig.json
-    shell.echo('9. Update tsconfig.json');
-    updatePackage.updateTsConfig(monetPath)
-    
-    //10. Update angular.json
-    shell.echo('10. Update angular.json');
-    updatePackage.updateAngularConfig(monetPath)
+    //6. Copy the scripts
+    shell.echo('6. Copy the scripts');
+    shell.cp('-R', targetPathMap.scriptsPath,  externalFilePathMap.scriptsPath);
 
+    //7. Copy the Monet source code
+    shell.echo('7. Copy the Monet source code');
+    shell.cp('-R', targetPathMap.monetProjectPath, externalFilePathMap.monetProjectPath);
+    
+    //8. Copy global SCSS
+    shell.echo('8. Copy global SCSS');
+    shell.cp('-R', targetPathMap.scssPath, externalFilePathMap.scssPath);
+
+    //9. Update package.json
+    shell.echo('9. Update package.json');
+    updatePackage.updatePackageJson(projectName, workSpaceName, monetPath)
+    
+    //10. Update tsconfig.json
+    shell.echo('10. Update tsconfig.json');
+    updatePackage.updateTsConfig(projectName, workSpaceName, monetPath)
+    
     //11. Update angular.json
-    shell.echo('11. Update styles.scss');
-    shell.cp('-R',`${__dirname}/templates/styles.scss`, `projects/${projectName}/src/`);
+    shell.echo('11. Update angular.json');
+    updatePackage.updateAngularConfig(projectName, workSpaceName, monetPath)
 
-    //12. Create folders
-    shell.echo('12. Create folders');
-    shell.cd(`projects/${projectName}/src/app`);
-    shell.mkdir('service');
-    shell.mkdir('mock');
-    shell.mkdir('auth');
-    shell.mkdir('layout');
-    shell.cd('service');
-    shell.mkdir('data-dic');
-    shell.mkdir('http');
-    shell.mkdir('icon');
-    shell.mkdir('template');
-    shell.mkdir('nav');
-    shell.cd('nav');
-    shell.mkdir('nav-bar');
-    shell.cd('../../..');
+    //12. Update angular.json
+    shell.echo('12. Update styles.scss');
+    shell.cp('-R', targetPathMap.styleScssPath, externalFilePathMap.styleScssPath);
 
     //13. Create json files for the translation and code
     shell.echo('13. Create json files for the translation and code');
-    shell.cd('assets');
-    shell.mkdir('templates');
-    shell.cd('templates');
-    shell.mkdir('code');
-    shell.mkdir('language');
-    shell.cp('-R',`${__dirname}/templates/en.lang.template.json`, `code/`);
-    shell.cp('-R',`${__dirname}/templates/public.code.template.json`, `language/`);
-    shell.cd('../../../../../..');
-    shell.pwd();
+    shell.cp('-R', targetPathMap.code, externalFilePathMap.code);
+    shell.cp('-R', targetPathMap.language, externalFilePathMap.language);
 
     //14. Update readme.md
     shell.echo('14. Update readme.md');
-    shell.cp('-R',`${__dirname}/templates/readme.md`, `./`);
-
-    
+    shell.cp('-R', targetPathMap.readme, externalFilePathMap.readme);
     shell.echo('New project has been created!');
 });

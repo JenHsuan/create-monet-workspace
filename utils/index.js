@@ -2,8 +2,8 @@ const fs = require('fs-extra');
 const process = require('process'); 
 
 
-exports.updateAngularConfig = function(monetPath) {
-    const createdProjectPath = getCreatedProjectPath();
+exports.updateAngularConfig = function(projectName, workSpaceName, monetPath) {
+    const createdProjectPath = getCreatedProjectPath(projectName, workSpaceName);
     fs.readFile(`${createdProjectPath}\\angular.json`,'utf8', (err, data) => {
         if (err) throw err;
         const json = data.replace(/\\"|"(?:\\"|[^"])*"|(\/\/.*|\/\*[\s\S]*?\*\/)/g, (m, g) => g ? "" : m);
@@ -19,10 +19,7 @@ exports.updateAngularConfig = function(monetPath) {
             monetProjects.forEach(project => {
                 overwiteProjects[project] = monetJsonData.projects[project]
             })
-            //console.log(overwiteProjects)
-
             originalJsonData.projects = Object.assign(originalJsonData.projects, overwiteProjects);
-           // console.log(originalJsonData)
             fs.writeFile(
                 `${createdProjectPath}\\angular.json`, 
                 JSON.stringify(originalJsonData, null, 2), 
@@ -34,8 +31,8 @@ exports.updateAngularConfig = function(monetPath) {
     });
 }
 
-exports.updateTsConfig = function(monetPath) {
-    const createdProjectPath = getCreatedProjectPath();
+exports.updateTsConfig = function(projectName, workSpaceName, monetPath) {
+    const createdProjectPath = getCreatedProjectPath(projectName, workSpaceName);
     const overwriteCompilerOptions = {
         strict: false,
         strictPropertyInitialization: false,
@@ -77,8 +74,8 @@ exports.updateTsConfig = function(monetPath) {
     });
 }
 
-exports.updatePackageJson = function(projectName, monetPath) {
-    const createdProjectPath = getCreatedProjectPath();
+exports.updatePackageJson = function(projectName, workSpaceName, monetPath) {
+    const createdProjectPath = getCreatedProjectPath(projectName, workSpaceName);
     fs.readFile(`${createdProjectPath}\\package.json`,'utf8', (err, data) => {
         if (err) throw err;
         const json = data.replace(/\\"|"(?:\\"|[^"])*"|(\/\/.*|\/\*[\s\S]*?\*\/)/g, (m, g) => g ? "" : m);
@@ -98,7 +95,6 @@ exports.updatePackageJson = function(projectName, monetPath) {
             originalJsonData.scripts = Object.assign(originalJsonData.scripts, scriptDiff);
             originalJsonData.dependencies = Object.assign(originalJsonData.dependencies, dependenciesDiff);
             originalJsonData.devDependencies = Object.assign(originalJsonData.devDependencies, devDependenciesDiff);
-            //console.log(originalJsonData)
             
             fs.writeFile(
                 `${createdProjectPath}\\package.json`, 
@@ -111,8 +107,8 @@ exports.updatePackageJson = function(projectName, monetPath) {
     });
 }
 
-const getCreatedProjectPath = () => {
-    return process.cwd();
+const getCreatedProjectPath = (projectName, workSpaceName) => {
+    return `${process.cwd()}/${projectName}/${workSpaceName}`;
 }
 
 const getDiff = (section, firstJson, secondJson, projectName) => {

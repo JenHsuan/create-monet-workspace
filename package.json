@@ -1,7 +1,7 @@
 {
   "name": "create-monet-workspace",
-  "version": "1.0.2",
-  "description": "",
+  "version": "1.0.4",
+  "description": "It's an non-official build command for creating an Angular workspace with a single component.",
   "main": "index.js",
   "bin": "index.js",
   "keywords": [

@@ -8,4 +8,11 @@ It's an non-official build command for creating an Angular workspace with a sing
 npx create-monet-workspace
 ```
 
+2. Answer questions
+![image](https://raw.githubusercontent.com/JenHsuan/create-monet-workspace/master/tutorials/screenshot1.jpg)
+
 # Release notes
+* 1.0.1: init
+* 1.0.2: fix bugs
+* 1.0.3: add tutorials 
+* 1.0.4: modify field of the code ane the language template 
