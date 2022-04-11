@@ -9,6 +9,7 @@ npx create-monet-workspace
 ```
 
 2. Answer questions
+
 ![image](https://raw.githubusercontent.com/JenHsuan/create-monet-workspace/master/tutorials/screenshot1.jpg)
 
 # Release notes
